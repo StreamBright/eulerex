@@ -15,7 +15,7 @@ defmodule Eulerex do
   end
 
   def filter_divisible(xs, m) do
-    Stream.filter(xs, fn(x) -> divisible(x,m) end)
+    Enum.filter(xs, fn(x) -> divisible(x,m) end)
   end
 
   def fib do
@@ -25,6 +25,10 @@ defmodule Eulerex do
 
   def even? do
     &(rem(&1, 2) == 0)
+  end
+
+  def palindromic?(x) do
+    String.to_integer(String.reverse(Integer.to_string(x))) == x
   end
 
   ## 001 
@@ -47,7 +51,17 @@ defmodule Eulerex do
   end
 
   def euler_003 do
-    
+    List.first(PrimeFactors.of(600851475143))
+  end
+
+  def euler_004 do
+    # max number of multiplying two 3 digit numbers 999 * 999 = 998001
+    # min number of multiplying two 3 digit numbers 100 * 100 = 10000
+    (for i <- 999..100, j <- 999..100, into: [], do:  i * j)
+    |> Stream.filter(&(palindromic?(&1)))
+    |> Stream.take(1)
+    |> Enum.to_list
+    |> List.first
   end
 
 end
