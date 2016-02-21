@@ -104,7 +104,7 @@ defmodule Eulerex do
   end
 
   def euler_007 do
-    Stream.iterate(11,&(&1+1))
+    Stream.iterate(2,&(&1+1))
     |> Stream.filter(&(PrimeFactors.is_prime?(&1))) 
     |> Enum.take(10001)
     |> List.last
