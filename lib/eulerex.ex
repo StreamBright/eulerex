@@ -50,18 +50,64 @@ defmodule Eulerex do
     |> Enum.sum
   end
 
+  ## 003
+
   def euler_003 do
     List.first(PrimeFactors.of(600851475143))
   end
+  
+  ## 004
 
   def euler_004 do
     # max number of multiplying two 3 digit numbers 999 * 999 = 998001
     # min number of multiplying two 3 digit numbers 100 * 100 = 10000
-    (for i <- 999..100, j <- 999..100, into: [], do:  i * j)
+    # I am not sure how to use Stream for generating the product
+    (for i <- 999..100, j <- i..100, into: [], do:  i * j)
     |> Stream.filter(&(palindromic?(&1)))
-    |> Stream.take(1)
-    |> Enum.to_list
+    |> Enum.sort
+    |> List.last
+  end
+
+  ## 005
+
+  def euler_005 do
+    #Brute force
+    Stream.iterate(20, &(&1+20))
+    |> Stream.filter(&(rem(&1, 2) == 0))
+    |> Stream.filter(&(rem(&1, 3) == 0))
+    |> Stream.filter(&(rem(&1, 4) == 0))
+    |> Stream.filter(&(rem(&1, 5) == 0))
+    |> Stream.filter(&(rem(&1, 6) == 0))
+    |> Stream.filter(&(rem(&1, 7) == 0))
+    |> Stream.filter(&(rem(&1, 8) == 0))
+    |> Stream.filter(&(rem(&1, 9) == 0))
+    |> Stream.filter(&(rem(&1, 10) == 0))
+    |> Stream.filter(&(rem(&1, 11) == 0))
+    |> Stream.filter(&(rem(&1, 12) == 0))
+    |> Stream.filter(&(rem(&1, 13) == 0))
+    |> Stream.filter(&(rem(&1, 14) == 0))
+    |> Stream.filter(&(rem(&1, 15) == 0))
+    |> Stream.filter(&(rem(&1, 16) == 0))
+    |> Stream.filter(&(rem(&1, 17) == 0))
+    |> Stream.filter(&(rem(&1, 18) == 0))
+    |> Stream.filter(&(rem(&1, 19) == 0))
+    |> Stream.filter(&(rem(&1, 20) == 0))
+    |> Enum.take(1)
     |> List.first
+  end
+
+  def euler_006 do
+    sum_of_squares    = 1..100 |> Stream.map(&(&1*&1)) |> Enum.sum
+    sum               = 1..100 |> Enum.sum
+    square_of_sum     = Pow.pow(sum, 2)
+    square_of_sum - sum_of_squares
+  end
+
+  def euler_007 do
+    Stream.iterate(11,&(&1+1))
+    |> Stream.filter(&(PrimeFactors.is_prime?(&1))) 
+    |> Enum.take(10001)
+    |> List.last
   end
 
 end
